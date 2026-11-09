@@ -1,0 +1,9 @@
+# Dev planning docs — kept locally, not committed.
+PLAN.md
+PLAN_GO.md
+
+# Build artifacts
+golang/bin/
+java/out/
+**/__pycache__/
+**/submission.zip

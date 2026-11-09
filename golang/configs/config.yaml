@@ -1,0 +1,6 @@
+# Placeholder config file. In the risk_audit project this is where Viper
+# reads server/database/logging settings from. For a hello-world binary
+# nothing is actually read yet — the file is here to show the layout.
+app:
+  name: hello_world
+  greeting: Hello
