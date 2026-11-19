@@ -1,20 +1,21 @@
 // Expression Transformation Project — Go implementation.
-// Reads a prefix function-composition expression from stdin and
-// writes the equivalent infix mathematical expression to stdout.
+// Reads a prefix function-composition expression from stdin and (once the
+// printer is wired in) writes the equivalent infix mathematical expression
+// to stdout.
 //
 // Pipeline: stdin -> Lexer -> Parser -> AST -> Printer -> stdout
-// Sta
 //
 // Exit codes:
 //
 //	0  success
 //	2  lexical error
-//	3  syntax error  (coming in Phase 2)
+//	3  syntax error
 //	4  I/O error
 //
 // Debug flags:
 //
 //	--tokens  dump the token stream and exit
+//	--ast     dump the parsed AST and exit
 package main
 
 import (
@@ -22,7 +23,9 @@ import (
 	"io"
 	"os"
 
+	"expr/internal/ast"
 	"expr/internal/lexer"
+	"expr/internal/parser"
 )
 
 func main() {
@@ -46,7 +49,19 @@ func main() {
 		}
 		return
 	}
-	_ = tokens
+
+	tree, err := parser.New(tokens).Parse()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(3)
+	}
+
+	if hasFlag(args, "--ast") {
+		fmt.Println(ast.Dump(tree))
+		return
+	}
+
+	_ = tree
 }
 
 // hasFlag reports whether the argument list contains the given flag.
