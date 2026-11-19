@@ -1,7 +1,7 @@
 // Expression Transformation Project — Go implementation.
-// Reads a prefix function-composition expression from stdin and (once the
-// printer is wired in) writes the equivalent infix mathematical expression
-// to stdout.
+// Reads a prefix function-composition expression from stdin and writes the
+// equivalent infix mathematical expression (with the minimum number of
+// parentheses) to stdout.
 //
 // Pipeline: stdin -> Lexer -> Parser -> AST -> Printer -> stdout
 //
@@ -26,6 +26,7 @@ import (
 	"expr/internal/ast"
 	"expr/internal/lexer"
 	"expr/internal/parser"
+	"expr/internal/printer"
 )
 
 func main() {
@@ -61,7 +62,7 @@ func main() {
 		return
 	}
 
-	_ = tree
+	fmt.Println(printer.Pretty(tree))
 }
 
 // hasFlag reports whether the argument list contains the given flag.
